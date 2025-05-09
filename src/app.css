@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+:root {
+	--cream: #fdf7f0;
+	--brown-light: #d2b48c;
+	--brown-secoundary: #c79a6d;
+	--brown-primary: #8b5e3c;
+	--text: #4e342e;
+	--input-bg: #fffaf4;
+	--input-border: #d0b8a8;
+}
+
+body {
+	background-color: var(--cream);
+	font-family: 'Noto Sans Thai';
+	color: var(--text);
+}
+
+label {
+	font-weight: 600;
+	color: var(--brown-primary);
+	margin-bottom: 0.25rem;
+	text-align: left;
+}
+
+input {
+	padding: 0.5rem 0.75rem;
+	border: 1px solid var(--input-border);
+	border-radius: 0.5rem;
+	background-color: var(--input-bg);
+	font-size: 1rem;
+	color: var(--text);
+	width: 100%;
+	box-sizing: border-box;
+	transition: border-color 0.2s ease;
+}
+
+input:focus,
+input:hover {
+	outline: none;
+	border-color: var(--brown-primary);
+	box-shadow: 0 0 0 2px rgba(139, 94, 60, 0.1);
+}
+
+button,
+.button {
+	margin-top: 1rem;
+	padding: 0.5rem 1.25rem;
+	background-color: var(--brown-primary);
+	color: white;
+	border: none;
+	border-radius: 0.5rem;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+button:hover {
+	background-color: #73452c;
+}
