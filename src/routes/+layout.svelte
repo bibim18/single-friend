@@ -8,14 +8,14 @@
 	const hideNavbar = derived(page, ($page) => $page.url.pathname === '/');
 </script>
 
-{#if !$hideNavbar}
-	<!-- Navbar -->
-	<nav class="navbar">
-		<a href="/">Home</a>
-		<a href="/display">Show</a>
-		<a href="/list">List</a>
-	</nav>
-{/if}
+<!-- {#if !$hideNavbar} -->
+<!-- Navbar -->
+<nav class="navbar">
+	<a href="/">Home</a>
+	<a href="/display">Show</a>
+	<a href="/list">List</a>
+</nav>
+<!-- {/if} -->
 <main class="container">
 	<slot />
 </main>
