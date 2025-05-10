@@ -3,32 +3,42 @@
 	import ContactDropdown from '$lib/components/ContactDropdown.svelte';
 	import Divider from '$lib/components/Divider.svelte';
 	import { addFriendData } from '$lib/actions/friends';
+	import { storage, ref, uploadBytes, getDownloadURL } from '$lib/firebase';
 
 	let completed: boolean = false;
 	let qrUploaded = false;
 	let imgloaded = false;
+	let isUploading = false;
 
-	function handleFileUpload(event: Event, field: string) {
+	async function handleFileUpload(event: Event, field: string) {
 		const file = (event.target as HTMLInputElement).files?.[0];
 
 		if (file) {
-			const reader = new FileReader();
-
-			// Define the onload event for the FileReader
-			reader.onload = () => {
-				const base64String = reader.result as string;
-				// Update friend object with Base64 string based on the field
+			isUploading = true;
+			try {
+				// Create a storage reference
+				const storageRef = ref(storage, `${Date.now()}-${file.name}`);
+				
+				// Upload the file to Firebase Storage
+				const snapshot = await uploadBytes(storageRef, file);
+				
+				// Get download URL
+				const downloadURL = await getDownloadURL(snapshot.ref);
+				
+				// Update friend object with the download URL based on the field
 				if (field === 'img') {
 					imgloaded = true;
-					$friend.img = base64String;
+					$friend.img = downloadURL;
 				} else if (field === 'qr') {
 					qrUploaded = true;
-					$friend.contact.qr = base64String;
+					$friend.contact.qr = downloadURL;
 				}
-			};
-
-			// Read the file as Data URL (Base64 encoded)
-			reader.readAsDataURL(file);
+			} catch (error) {
+				console.error('Error uploading file:', error);
+				alert('Failed to upload file. Please try again.');
+			} finally {
+				isUploading = false;
+			}
 		}
 	}
 
@@ -73,7 +83,7 @@
 						<input type="text" id="contact" name="contact" bind:value={$friend.contact.info} />
 					</div>
 				</div>
-				<Divider text="or" />
+				<!-- <Divider text="or" />
 				<div class="justify-self-center pt-2">
 					<input
 						type="file"
@@ -86,7 +96,7 @@
 					{#if qrUploaded}
 						<span class="uploaded-check">✔</span>
 					{/if}
-				</div>
+				</div> -->
 			</div>
 
 			<button on:click={onSubmit} disabled={completed}>ส่ง</button>

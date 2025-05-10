@@ -16,7 +16,7 @@ export interface FriendData {
 export const friend = writable<FriendData>({
 	name: '',
 	contact: {
-		type: 'fb',
+		type: 'ig',
 		info: ''
 	},
 	quote: '',

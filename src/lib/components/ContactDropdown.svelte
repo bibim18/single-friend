@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { fb, ig, line, linkin, tel } from './index';
+	import { fb, ig, line, linkin, tel, tk } from './index';
 	import { onMount } from 'svelte';
 
 	export let value: string = 'ig';
 	const options = [
-		{ value: 'fb', label: 'Facebook', icon: fb },
 		{ value: 'ig', label: 'Instagram', icon: ig },
+		{ value: 'tk', label: 'TikTok', icon: tk},
+		{ value: 'fb', label: 'Facebook', icon: fb },
 		{ value: 'line', label: 'LINE', icon: line },
 		{ value: 'linkin', label: 'LinkedIn', icon: linkin },
 		{ value: 'tel', label: 'Tel', icon: tel }

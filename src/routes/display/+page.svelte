@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getFriends } from '$lib/actions/friends';
-	import { fb, ig, line, linkin, tel } from '$lib/components';
+	import { fb, ig, line, linkin, tel, avtDefault } from '$lib/components';
 	import Divider from '$lib/components/Divider.svelte';
 	import type { FriendData } from '$lib/types';
 	import { onMount } from 'svelte';
@@ -32,8 +32,8 @@
 
 {#if friends.length > 0}
 	<div class="card">
-		<img class="img h-fit" src={friends[currentIndex].img} alt="รูป {friends[currentIndex].name}" />
-		<div class="grid gap-4">
+		<img class="img h-fit" src={friends[currentIndex].img || avtDefault} alt="รูป {friends[currentIndex].name}" />
+		<div class="right-box grid gap-4">
 			<div class="grid gap-4">
 				<div class="title text-xl">คำคมโดนใจ</div>
 				<div class="text-3xl">{friends[currentIndex].quote}</div>
@@ -50,17 +50,15 @@
 						<div class="text-xl">{friends[currentIndex].contact.info}</div>
 					</div>
 				{/if}
-				{#if friends[currentIndex].contact.qr}
-					<div class="justify-items-center">
-						<img
-							class="rounded-md border-[2px] border-[#c79a6d]"
-							src={friends[currentIndex].contact.qr ?? ''}
-							alt=""
-							width="200px"
-						/>
-						<div>แสกนทางนี้ได้เลยจ้า</div>
-					</div>
-				{/if}
+				<div class="justify-items-center">
+					<img
+						class="rounded-md border-[2px] border-[#c79a6d]"
+						src={`https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${friends[currentIndex].contact.info}`}
+						alt=""
+						width="200px"
+					/>
+					<div>แสกนทางนี้ได้เลยจ้า</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -74,7 +72,7 @@
 	}
 
 	.card {
-		max-width: 800px;
+		width: 100%;
 		background-color: #fff;
 		border: 1px solid var(--input-border);
 		border-radius: 16px;
@@ -82,13 +80,17 @@
 		text-align: center;
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 		transition: opacity 0.5s ease-in-out;
-		justify-items: center;
+		justify-content: center;
 		display: flex;
 		gap: 1rem;
 	}
 
+	.right-box{
+		width: 60%;
+	}
+
 	.card .img {
-		width: 300px;
+		width: 450px;
 		border-radius: 12px;
 		margin-bottom: 1rem;
 	}
